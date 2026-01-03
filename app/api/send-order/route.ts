@@ -2,15 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
   try {
-    const { fileName, totalPrice, copies, paperType, coverType, contact } = await req.json();
+    const { totalPrice, copies, paperType, coverType, contact } = await req.json();
 
-    const BOT_TOKEN = "8389409822:AAH4u330AtuyQEUe7oRpHinULyby6KgrsQw"; // Add your bot token to your environment variables
-    const CHAT_ID = 6846125638; // Add your chat ID to your environment variables
-
-    if (!BOT_TOKEN || !CHAT_ID) {
-      console.error('Bot token or chat ID not provided');
-      return NextResponse.json({ success: false, error: 'Internal server error' });
-    }
+    const BOT_TOKEN = "8342165659:AAHi4E87PG9r2BWoEMR900NyiYb3aF5UzfY";
+    const CHAT_IDS = [
+      5480257326,
+      980605046,
+      6846125638,
+    ];
 
     const message = `
 📦 <b>YANGI BUYURTMA KELDI!</b>
@@ -19,7 +18,7 @@ export async function POST(req: NextRequest) {
 📚 <b>Nusxalar soni:</b> ${copies} ta
 📄 <b>Qog'oz turi:</b> ${paperType}
 🖼️ <b>Muqova turi:</b> ${coverType}
-📱 <b>Mijoz :</b> @${contact}
+📱 <b>Mijoz:</b> @${contact}
 
 🕒 Sana: ${new Date().toLocaleString('uz-UZ', {
       timeZone: 'Asia/Tashkent',
@@ -27,37 +26,38 @@ export async function POST(req: NextRequest) {
       month: '2-digit',
       year: 'numeric',
       hour: '2-digit',
-      minute: '2-digit'
+      minute: '2-digit',
     })}
 
 <i>Tezda javob bering! 🔥</i>
 `;
 
     const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-    const params = {
-      chat_id: CHAT_ID,
-      text: message,
-      parse_mode: 'HTML' as const
-    };
 
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(params),
-    });
+    const requests = CHAT_IDS.map(chatId =>
+      fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: message,
+          parse_mode: 'HTML',
+        }),
+      }).then(res => res.json())
+    );
 
-    const data = await response.json();
+    const results = await Promise.all(requests);
 
-    if (data.ok) {
-      return NextResponse.json({ success: true });
-    } else {
-      console.error('Error sending message to Telegram:', data);
-      return NextResponse.json({ success: false, error: 'Failed to send message' });
+    const failed = results.find(r => !r.ok);
+    if (failed) {
+      console.error('Telegram error:', results);
+      return NextResponse.json({ success: false });
     }
-  } catch (error) {
-    console.error('Error sending order:', error);
+
+    return NextResponse.json({ success: true });
+
+  } catch (err) {
+    console.error(err);
     return NextResponse.json({ success: false, error: 'Internal server error' });
   }
 }
