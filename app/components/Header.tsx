@@ -1,5 +1,7 @@
 import Image from "next/image";
 import logo from "@/public/logo.png";
+import { Moon, Sun } from "lucide-react"; // Import Lucide icons
+
 interface HeaderProps {
   darkMode: boolean;
   toggleDarkMode: () => void;
@@ -13,12 +15,14 @@ export default function Header({ darkMode, toggleDarkMode }: HeaderProps) {
       </h1>
       <button
         onClick={toggleDarkMode}
-        className={`px-4 py-2 rounded-lg border ${darkMode
-          ? "border-gray-700 bg-gray-800 hover:bg-gray-700"
-          : "border-gray-300 bg-gray-200 hover:bg-gray-300"
-          } font-semibold`}
+        className={`p-2 rounded-lg transition-colors duration-200
+          ${darkMode
+            ? "bg-gray-700 hover:bg-gray-600 text-gray-50"
+            : "bg-gray-200 hover:bg-gray-300 text-gray-800"
+          }`}
+        aria-label={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
       >
-        {darkMode ? "Light Mode" : "Dark Mode"}
+        {darkMode ? <Sun size={20} /> : <Moon size={20} />}
       </button>
     </header>
   );
