@@ -7,7 +7,8 @@ interface MarketingSectionProps {
 
 const RightMarketingSection: React.FC<MarketingSectionProps> = ({ darkMode }) => {
   return (
-    <div className={`p-6 rounded-xl shadow-lg h-full flex flex-col justify-between ${darkMode ? 'bg-gray-800 text-gray-200' : 'bg-white text-gray-800'}`}>
+    <div className={`p-6 rounded-xl shadow-lg h-full flex flex-col justify-between transition-all duration-200 ease-in-out transform hover:scale-103
+      ${darkMode ? 'bg-gray-800 text-gray-200' : 'bg-white text-gray-800'}`}>
       <div>
         <div className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 mb-3">
           <Sparkles size={14} /> Premium xizmat

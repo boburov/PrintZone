@@ -39,11 +39,11 @@ export default function UploadCard({ darkMode }: UploadCardProps) {
   };
 
   return (
-    <section className={`rounded-xl shadow p-6 border ${darkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"}`}>
-      <p className="text-2xl font-bold">Premium Printing</p>
-      <p className={`text-sm ${darkMode ? "text-gray-300" : "text-gray-500"}`}>Upload → Auto detect → Calculate</p>
+    <section className={`rounded-xl shadow-lg p-6 border ${darkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"}`}>
+      <p className="text-2xl font-bold mb-1">Premium Printing</p>
+      <p className={`text-sm font-medium mb-5 ${darkMode ? "text-gray-300" : "text-gray-500"}`}>Upload → Auto detect → Calculate</p>
 
-      <div className={`mt-5 flex flex-col items-center gap-4 border-2 border-dashed rounded-xl px-6 py-8 w-full ${darkMode ? "border-gray-600" : "border-gray-300"}`}>
+      <div className={`mt-5 flex flex-col items-center gap-4 border-2 border-dashed rounded-xl px-6 py-8 w-full transition-colors duration-200 ${darkMode ? "border-gray-600 hover:bg-gray-700/50" : "border-gray-300 hover:bg-gray-50"}`}>
         {isUploading ? (
           <Loader2 className="h-8 w-8 animate-spin text-[#FF500B]" />
         ) : (
@@ -54,7 +54,7 @@ export default function UploadCard({ darkMode }: UploadCardProps) {
         </p>
         <label
           htmlFor="file"
-          className={`rounded-lg bg-[#FF500B] hover:bg-[#e44907] transition px-4 py-2 font-bold text-white cursor-pointer ${isUploading ? 'opacity-50 cursor-not-allowed' : ''}`}
+          className={`rounded-lg bg-[#FF500B] shadow-md hover:bg-[#e44907] transition-all duration-200 px-4 py-2 font-bold text-white cursor-pointer ${isUploading ? 'opacity-50 cursor-not-allowed' : ''}`}
         >
           {isUploading ? "Yuklanmoqda..." : "Faylni Tanlang"}
         </label>

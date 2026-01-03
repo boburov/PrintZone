@@ -13,7 +13,7 @@ export default function OptionsCard({ darkMode }: { darkMode: boolean }) {
   } = useStore();
 
   return (
-    <section className={`rounded-xl shadow p-6 border ${darkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"}`}>
+    <section className={`rounded-xl shadow-lg p-6 border ${darkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"}`}>
       <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
         <Copy size={20} /> Printing Options
       </h2>
@@ -22,7 +22,7 @@ export default function OptionsCard({ darkMode }: { darkMode: boolean }) {
           <label className="font-medium mb-1 flex items-center gap-2">
             <FileText size={16} /> Page Count
           </label>
-          <p className="text-2xl font-bold">{pageCount}</p>
+          <p className="text-2xl font-extrabold">{pageCount}</p> {/* Changed to font-extrabold */}
         </div>
         <div className="flex flex-col">
           <label className="font-medium mb-1 flex items-center gap-2">
@@ -32,7 +32,7 @@ export default function OptionsCard({ darkMode }: { darkMode: boolean }) {
             <button
               onClick={() => setCopies(copies - 1)}
               disabled={copies <= 1}
-              className={`w-10 h-10 border rounded-xl flex items-center justify-center transition-colors duration-200
+              className={`w-10 h-10 border rounded-xl shadow-sm flex items-center justify-center transition-all duration-200 transform hover:scale-105 disabled:hover:scale-100
                 ${darkMode
                   ? "bg-gray-700 border-gray-600 text-gray-50 hover:bg-gray-600 disabled:opacity-50"
                   : "bg-white border-gray-300 text-gray-900 hover:bg-gray-100 disabled:opacity-50"
@@ -50,7 +50,7 @@ export default function OptionsCard({ darkMode }: { darkMode: boolean }) {
             />
             <button
               onClick={() => setCopies(copies + 1)}
-              className={`w-10 h-10 border rounded-xl flex items-center justify-center transition-colors duration-200
+              className={`w-10 h-10 border rounded-xl shadow-sm flex items-center justify-center transition-all duration-200 transform hover:scale-105
                 ${darkMode
                   ? "bg-gray-700 border-gray-600 text-gray-50 hover:bg-gray-600"
                   : "bg-white border-gray-300 text-gray-900 hover:bg-gray-100"
@@ -67,9 +67,9 @@ export default function OptionsCard({ darkMode }: { darkMode: boolean }) {
           <div className="mt-2 flex gap-2">
             <button
               onClick={() => setPaperType("A4")}
-              className={`px-4 py-2 rounded-lg border transition-colors duration-200
+              className={`px-4 py-2 rounded-lg border transition-all duration-200 transform hover:scale-105 shadow-sm
                 ${paperType === "A4"
-                  ? "bg-[#FF500B] text-white border-[#FF500B]"
+                  ? "bg-[#FF500B] text-white border-[#FF500B] shadow-md"
                   : darkMode
                     ? "bg-gray-700 border-gray-600 text-gray-50 hover:bg-gray-600"
                     : "bg-white border-gray-300 text-gray-900 hover:bg-gray-100"
@@ -79,9 +79,9 @@ export default function OptionsCard({ darkMode }: { darkMode: boolean }) {
             </button>
             <button
               onClick={() => setPaperType("A5")}
-              className={`px-4 py-2 rounded-lg border transition-colors duration-200
+              className={`px-4 py-2 rounded-lg border transition-all duration-200 transform hover:scale-105 shadow-sm
                 ${paperType === "A5"
-                  ? "bg-[#FF500B] text-white border-[#FF500B]"
+                  ? "bg-[#FF500B] text-white border-[#FF500B] shadow-md"
                   : darkMode
                     ? "bg-gray-700 border-gray-600 text-gray-50 hover:bg-gray-600"
                     : "bg-white border-gray-300 text-gray-900 hover:bg-gray-100"
@@ -98,9 +98,9 @@ export default function OptionsCard({ darkMode }: { darkMode: boolean }) {
           <div className="mt-2 flex gap-2">
             <button
               onClick={() => setCoverType("soft")}
-              className={`px-4 py-2 rounded-lg border transition-colors duration-200
+              className={`px-4 py-2 rounded-lg border transition-all duration-200 transform hover:scale-105 shadow-sm
                 ${coverType === "soft"
-                  ? "bg-[#FF500B] text-white border-[#FF500B]"
+                  ? "bg-[#FF500B] text-white border-[#FF500B] shadow-md"
                   : darkMode
                     ? "bg-gray-700 border-gray-600 text-gray-50 hover:bg-gray-600"
                     : "bg-white border-gray-300 text-gray-900 hover:bg-gray-100"
@@ -110,9 +110,9 @@ export default function OptionsCard({ darkMode }: { darkMode: boolean }) {
             </button>
             <button
               onClick={() => setCoverType("hard")}
-              className={`px-4 py-2 rounded-lg border transition-colors duration-200
+              className={`px-4 py-2 rounded-lg border transition-all duration-200 transform hover:scale-105 shadow-sm
                 ${coverType === "hard"
-                  ? "bg-[#FF500B] text-white border-[#FF500B]"
+                  ? "bg-[#FF500B] text-white border-[#FF500B] shadow-md"
                   : darkMode
                     ? "bg-gray-700 border-gray-600 text-gray-50 hover:bg-gray-600"
                     : "bg-white border-gray-300 text-gray-900 hover:bg-gray-100"

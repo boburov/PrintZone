@@ -10,19 +10,23 @@ export default function PriceCard({ darkMode, onOrder }: PriceCardProps) {
   const { totalPrice, calculateTotalPrice, reset, isCalculated } = useStore();
 
   return (
-    <section className={`rounded-xl shadow p-6 border flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 ${darkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"}`}>
+    <section className={`rounded-xl shadow-lg p-6 border flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 ${darkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"}`}>
       <div className="flex gap-4 flex-wrap">
-        <button onClick={calculateTotalPrice} className="bg-[#FF500B] hover:bg-[#e44907] px-4 py-2 rounded-xl font-bold text-white flex items-center gap-2 transition-colors duration-200">
+        <button onClick={calculateTotalPrice} className="bg-[#FF500B] shadow-md hover:bg-[#e44907] px-4 py-2 rounded-xl font-bold text-white flex items-center gap-2 transition-all duration-200 ease-in-out transform hover:scale-105">
           <Calculator size={20} /> Calculate
         </button>
         <button
           onClick={onOrder}
           disabled={!isCalculated}
-          className={`px-4 py-2 rounded-xl font-bold text-white flex items-center gap-2 transition-colors duration-200 ${isCalculated ? 'bg-[#FF500B] hover:bg-[#e44907]' : 'bg-gray-400 cursor-not-allowed'}`}
-        >
+          className={`px-4 py-2 rounded-xl font-bold text-white flex items-center gap-2 transition-all duration-200 ease-in-out shadow-md
+            ${isCalculated
+              ? 'bg-[#FF500B] hover:bg-[#e44907] transform hover:scale-105'
+              : 'bg-gray-400 opacity-60 cursor-not-allowed'
+            }`}>
           <ShoppingCart size={20} /> Order
         </button>
-        <button onClick={reset} className={`px-4 py-2 rounded-xl border flex items-center gap-2 transition-colors duration-200 ${darkMode ? "border-gray-600 hover:bg-gray-700 text-gray-50" : "border-gray-300 hover:bg-gray-100 text-gray-900"}`}>
+        <button onClick={reset} className={`px-4 py-2 rounded-xl border shadow-md flex items-center gap-2 transition-all duration-200 ease-in-out transform hover:scale-105
+          ${darkMode ? "border-gray-600 hover:bg-gray-700 text-gray-50" : "border-gray-300 hover:bg-gray-100 text-gray-900"}`}>
           <RotateCcw size={20} /> Reset
         </button>
       </div>
@@ -42,3 +46,4 @@ export default function PriceCard({ darkMode, onOrder }: PriceCardProps) {
     </section>
   );
 }
+
