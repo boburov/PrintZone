@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
     const CHAT_IDS = [
       5480257326,
       980605046,
-      6846125638,
+      6846125638
     ];
 
     const message = `
