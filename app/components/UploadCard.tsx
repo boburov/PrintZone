@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { UploadCardProps } from "../types/stypes";
 // import axios from "axios"; // axios is no longer needed in this component
 import useStore from "../store/store";
@@ -9,13 +9,6 @@ export default function UploadCard({ darkMode }: UploadCardProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const { setFile, setFileName, setPageCount, fileName, pageCount } = useStore(); // Get pageCount from store
   const [isUploading, setIsUploading] = useState(false);
-
-  useEffect(() => {
-    // This effect ensures that if the file is cleared, the pageCount is also reset visually
-    if (!fileName) {
-      setPageCount(0);
-    }
-  }, [fileName, setPageCount]);
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -89,23 +82,21 @@ export default function UploadCard({ darkMode }: UploadCardProps) {
         />
       </div>
 
-      {fileName && (
-        <div className="mt-4">
-          <label htmlFor="page-count" className={`block text-sm font-medium ${darkMode ? "text-gray-300" : "text-gray-700"}`}>
-            Sahifalar soni
-          </label>
-          <input
-            type="number"
-            id="page-count"
-            value={pageCount === 0 && fileName ? '' : pageCount} // Display empty if 0 and file is selected
-            onChange={handlePageCountChange}
-            className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#FF500B] focus:ring-[#FF500B] sm:text-sm ${darkMode ? "bg-gray-700 text-white border-gray-600" : "bg-white text-gray-900"}`}
-            placeholder="Sahifalar sonini kiriting"
-            min="0"
-            disabled={isUploading || !fileName}
-          />
-        </div>
-      )}
+      <div className="mt-4">
+        <label htmlFor="page-count" className={`block text-sm font-medium ${darkMode ? "text-gray-300" : "text-gray-700"}`}>
+          Sahifalar soni
+        </label>
+        <input
+          type="number"
+          id="page-count"
+          value={pageCount === 0 ? '' : pageCount}
+          onChange={handlePageCountChange}
+          className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#FF500B] focus:ring-[#FF500B] sm:text-sm ${darkMode ? "bg-gray-700 text-white border-gray-600" : "bg-white text-gray-900"}`}
+          placeholder="Sahifalar sonini kiriting"
+          min="0"
+          disabled={isUploading}
+        />
+      </div>
     </section>
   );
 }

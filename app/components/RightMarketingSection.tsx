@@ -16,7 +16,7 @@ const RightMarketingSection: React.FC<MarketingSectionProps> = ({ darkMode }) =>
         <h3 className="text-xl font-bold mb-2 flex items-center gap-2">
           <Sparkles size={20} className="text-[#FF500B]" /> Maxsus Taklif!
         </h3>
-        <p className="text-lg leading-relaxed">O'zingizning dizayningiz bilan chop eting.</p>
+        <p className="text-lg leading-relaxed">O&apos;zingizning dizayningiz bilan chop eting.</p>
         <p className="mt-2 text-sm opacity-80">Yuqori sifat, tezkor xizmat!</p>
       </div>
       <div className="mt-4 flex items-center gap-3 text-sm font-medium">

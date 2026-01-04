@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import useStore from '../store/store';
 import axios from 'axios';
-import { ClipboardList, User, Edit, Send, X, AlertCircle, CheckCircle } from 'lucide-react'; // Import Lucide icons
+import { ClipboardList, User, Edit, Send, X, AlertCircle, CheckCircle, Loader2 } from 'lucide-react'; // Import Lucide icons
 
 interface ModalProps {
   darkMode: boolean;
@@ -14,6 +14,7 @@ export default function Modal({ darkMode, onClose }: ModalProps) {
   const [contact, setContact] = useState('');
   const [error, setError] = useState('');
   const [isConfirming, setIsConfirming] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { totalPrice, copies, paperType, coverType, fileName } = useStore();
 
   const handleConfirm = () => {
@@ -26,6 +27,7 @@ export default function Modal({ darkMode, onClose }: ModalProps) {
   };
 
   const handleSubmit = async () => {
+    setIsSubmitting(true);
     const orderDetails = {
       fileName,
       totalPrice,
@@ -43,6 +45,7 @@ export default function Modal({ darkMode, onClose }: ModalProps) {
       console.error('Error sending order:', error);
       setError('Buyurtmani yuborishda xatolik yuz berdi. Qayta urinib ko‘ring.'); // Uzbek error message
       setIsConfirming(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -61,14 +64,21 @@ export default function Modal({ darkMode, onClose }: ModalProps) {
                 onClick={() => setIsConfirming(false)}
                 className={`px-4 py-2 rounded-lg border shadow-md flex items-center gap-2 transition-all duration-200 ease-in-out transform hover:scale-105
                   ${darkMode ? 'border-gray-600 hover:bg-gray-700' : 'border-gray-300 hover:bg-gray-100'}`}
+                disabled={isSubmitting}
               >
                 <Edit size={18} /> Yo'q, Tahrirlash {/* Uzbek translation */}
               </button>
               <button
                 onClick={handleSubmit}
                 className="bg-[#FF500B] shadow-md hover:bg-[#e44907] px-4 py-2 rounded-lg font-bold text-white flex items-center gap-2 transition-all duration-200 ease-in-out transform hover:scale-105"
+                disabled={isSubmitting}
               >
-                <Send size={18} /> Ha, Yuborish {/* Uzbek translation */}
+                {isSubmitting ? (
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                ) : (
+                  <Send size={18} />
+                )}{' '}
+                {isSubmitting ? 'Yuborilmoqda...' : 'Ha, Yuborish'}{/* Uzbek translation */}
               </button>
             </div>
           </div>
