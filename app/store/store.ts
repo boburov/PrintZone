@@ -5,103 +5,122 @@ type CoverType = 'soft' | 'hard';
 
 interface PrintState {
   file: File | null;
+  fileName: string;
   pageCount: number;
   copies: number;
   paperType: PaperType;
   coverType: CoverType;
   totalPrice: number;
-  pricePerBook: number; // To store the calculated price for a single book
-  fileName: string;
+  pricePerBook: number;
   isCalculated: boolean;
+
   setFile: (file: File | null) => void;
+  setFileName: (fileName: string) => void;
   setPageCount: (pageCount: number) => void;
   setCopies: (copies: number) => void;
   setPaperType: (paperType: PaperType) => void;
   setCoverType: (coverType: CoverType) => void;
   calculateTotalPrice: () => void;
   reset: () => void;
-  setFileName: (fileName: string) => void;
 }
 
 const useStore = create<PrintState>((set, get) => ({
   file: null,
+  fileName: '',
   pageCount: 0,
   copies: 1,
   paperType: 'A4',
   coverType: 'soft',
   totalPrice: 0,
   pricePerBook: 0,
-  fileName: '',
   isCalculated: false,
+
   setFile: (file) => set({ file, isCalculated: false }),
+  setFileName: (fileName) => set({ fileName }),
   setPageCount: (pageCount) => set({ pageCount, isCalculated: false }),
   setCopies: (copies) => set({ copies, isCalculated: false }),
   setPaperType: (paperType) => set({ paperType, isCalculated: false }),
   setCoverType: (coverType) => set({ coverType, isCalculated: false }),
-  setFileName: (fileName) => set({ fileName }),
+
   calculateTotalPrice: () => {
     const { pageCount, copies, paperType, coverType } = get();
 
-    if (pageCount === 0 || copies === 0) {
-      set({ totalPrice: 0, pricePerBook: 0, isCalculated: true });
+    if (pageCount <= 0 || copies <= 0) {
+      set({
+        totalPrice: 0,
+        pricePerBook: 0,
+        isCalculated: true,
+      });
       return;
     }
 
-    let coverPrice = 0;
+    let jild: number;
     switch (coverType) {
-      case 'hard':
-        coverPrice = 25000;
+      case "hard":
+        jild = 25000;
         break;
-      case 'soft':
-        coverPrice = 5500;
+      case "soft":
+        jild = 5500;
         break;
+      default:
+        jild = 5500;
     }
 
-    let pagePrice = 0;
+    let qogozNarx: number;
     if (coverType === 'soft') {
-      if (paperType === 'A5') {
-        pagePrice = 57;
-      } else { // A4
-        pagePrice = 110;
+      switch (paperType) {
+        case 'A5':
+          qogozNarx = 57;
+          break;
+        case 'A4':
+          qogozNarx = 110;
+          break;
+        default:
+          qogozNarx = 110;
       }
-    } else { // hard
-      if (paperType === 'A5') {
-        pagePrice = 70;
-      } else { // A4
-        pagePrice = 120;
+    } else { // hard cover
+      switch (paperType) {
+        case 'A5':
+          qogozNarx = 70;
+          break;
+        case 'A4':
+          qogozNarx = 120;
+          break;
+        default:
+          qogozNarx = 120;
       }
     }
 
-    let singleBookPrice = (pageCount * pagePrice) + coverPrice;
+    let kitobPrice = pageCount * qogozNarx + jild;
 
     if (copies === 1) {
-      singleBookPrice *= 3;
+      kitobPrice *= 3;
     } else if (copies <= 10) {
-      singleBookPrice *= 2;
+      kitobPrice *= 2;
     } else if (copies <= 20) {
-      singleBookPrice *= 1.3;
+      kitobPrice *= 1.3;
     }
 
-    // Final 1.2 multiplier from the original script
-    const finalSingleBookPrice = singleBookPrice * 1.2;
-    const finalTotal = finalSingleBookPrice * copies;
+    const finalPricePerBook = kitobPrice * 1.2;
+    const finalTotalPrice = finalPricePerBook * copies;
 
     set({
-      totalPrice: finalTotal,
-      pricePerBook: finalSingleBookPrice,
+      pricePerBook: finalPricePerBook,
+      totalPrice: finalTotalPrice,
       isCalculated: true,
     });
   },
+
   reset: () =>
     set({
       file: null,
+      fileName: '',
       pageCount: 0,
       copies: 1,
       paperType: 'A4',
       coverType: 'soft',
       totalPrice: 0,
       pricePerBook: 0,
-      fileName: '',
       isCalculated: false,
     }),
 }));
