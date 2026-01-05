@@ -7,7 +7,7 @@ interface PriceCardProps {
 }
 
 export default function PriceCard({ darkMode, onOrder }: PriceCardProps) {
-  const { totalPrice, copies, pricePerBook, calculateTotalPrice, reset, isCalculated } = useStore();
+  const { totalPrice, calculateTotalPrice, reset, isCalculated } = useStore();
 
   const formatCurrency = (value: number) =>
     new Intl.NumberFormat("uz-UZ", {
@@ -40,14 +40,7 @@ export default function PriceCard({ darkMode, onOrder }: PriceCardProps) {
       <div className="text-right">
         <p className={`text-sm ${darkMode ? "text-gray-400" : "text-gray-500"}`}>Total Price</p>
         <div suppressHydrationWarning className="text-xl sm:text-2xl font-extrabold text-[#FF500B]">
-          {isCalculated && totalPrice > 0 ? (
-            <div className="flex flex-col items-end">
-              <span className="text-sm font-medium">{`${copies} x ${formatCurrency(pricePerBook)}`}</span>
-              <span className="text-2xl sm:text-3xl">{formatCurrency(totalPrice)}</span>
-            </div>
-          ) : (
-            formatCurrency(0)
-          )}
+          {isCalculated ? formatCurrency(totalPrice) : formatCurrency(0)}
         </div>
       </div>
     </section>
