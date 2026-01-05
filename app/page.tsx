@@ -13,14 +13,14 @@ import LeftMarketingSection from "./components/LeftMarketingSection"; // Correct
 export default function PrintZonePage() {
   const [darkMode, setDarkMode] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { pageCount } = useStore();
+  const { bookCount } = useStore();
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
   };
 
   const handleOrder = () => {
-    if (pageCount === 0) {
+    if (bookCount === 0) {
       alert("Iltimos, sahifalar sonini kiriting yoki PDF-fayl yuklang.");
       return;
     }

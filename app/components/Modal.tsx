@@ -15,7 +15,7 @@ export default function Modal({ darkMode, onClose }: ModalProps) {
   const [error, setError] = useState('');
   const [isConfirming, setIsConfirming] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { totalPrice, copies, paperType, coverType, fileName } = useStore();
+  const { totalPrice, copies, paperType, coverType, fileNames } = useStore();
 
   const handleConfirm = () => {
     if (!contact.trim()) { // Trim to check for empty or just whitespace
@@ -29,7 +29,7 @@ export default function Modal({ darkMode, onClose }: ModalProps) {
   const handleSubmit = async () => {
     setIsSubmitting(true);
     const orderDetails = {
-      fileName,
+      fileNames,
       totalPrice,
       copies,
       paperType,
