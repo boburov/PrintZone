@@ -3,12 +3,12 @@ import RightMarketingSection from "./components/RightMarketingSection";
 import { useState } from "react";
 import Header from "./components/Header";
 import UploadCard from "./components/UploadCard";
-import OptionsCard from "./components/OptionsCard";
 import PriceCard from "./components/PriceCard";
 import Modal from "./components/Modal";
 import Contact from "./components/Contact";
 import useStore from './store/store';
 import LeftMarketingSection from "./components/LeftMarketingSection"; // Corrected import
+import BookPriceList from "./components/BookPriceList";
 
 export default function PrintZonePage() {
   const [darkMode, setDarkMode] = useState<boolean>(false);
@@ -42,7 +42,7 @@ export default function PrintZonePage() {
       <div className="w-full space-y-8">
         <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
         <UploadCard darkMode={darkMode} />
-        <OptionsCard darkMode={darkMode} />
+        <BookPriceList darkMode={darkMode} />
         <PriceCard darkMode={darkMode} onOrder={handleOrder} />
         <Contact darkMode={darkMode} /> {/* Pass darkMode prop */}
       </div>

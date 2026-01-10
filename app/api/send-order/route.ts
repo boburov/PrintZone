@@ -2,22 +2,30 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
   try {
-    const { totalPrice, copies, paperType, coverType, contact } = await req.json();
+    const { fileNames, totalPrice, copies, paperTypes, coverTypes, contact } = await req.json();
 
     const BOT_TOKEN = "8342165659:AAHi4E87PG9r2BWoEMR900NyiYb3aF5UzfY";
     const CHAT_IDS = [
       5480257326,
       980605046,
+      8193994750, // This one was missing in the user's last message, assuming it should be kept
       6846125638
     ];
 
+    let booksDetails = '';
+    for (let i = 0; i < fileNames.length; i++) {
+      booksDetails += `
+📖 <b>Kitob ${i + 1}:</b> ${fileNames[i]}
+  - Nusxalar soni: ${copies[i]}
+  - Qog'oz turi: ${paperTypes[i]}
+  - Muqova turi: ${coverTypes[i]}
+`;
+    }
+
     const message = `
 📦 <b>YANGI BUYURTMA KELDI!</b>
-
+${booksDetails}
 💰 <b>Umumiy narx:</b> ${totalPrice.toLocaleString('ru-RU')} so'm
-📚 <b>Nusxalar soni:</b> ${copies} ta
-📄 <b>Qog'oz turi:</b> ${paperType}
-🖼️ <b>Muqova turi:</b> ${coverType}
 📱 <b>Mijoz:</b> @${contact}
 
 🕒 Sana: ${new Date().toLocaleString('uz-UZ', {
